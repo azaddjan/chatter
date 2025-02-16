@@ -1,1 +1,50 @@
-spring.application.name=chatter
+spring:
+  application:
+    name: demo
+  ai:
+    vectorstore:
+      pgvector:
+        table-name: documents
+        vector-column: embedding
+    ollama:
+      chat:
+        model: qwen2.5:7b
+        options:
+          temperature: 0.7
+      embedding:
+        model: nomic-embed-text
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl.auto: update
+logging:
+  level:
+    root: INFO
+    com.azaddjan: DEBUG
+    org.springframework.ai: DEBUG
+    io.micrometer: DEBUG
+server:
+  port: 8080
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    metrics:
+      access: unrestricted
+    health:
+      show-details: always
+    prometheus:
+      access: unrestricted
+

@@ -1,4 +1,6 @@
-package com.azaddjan.entity;
+package com.azaddjan.model;
 
-public record Answer (String answer) {
+import java.io.Serializable;
+
+public record Answer (String answer)  implements Serializable {
 }

@@ -1,4 +1,7 @@
-package com.azaddjan.entity;
+package com.azaddjan.model;
+import jakarta.validation.constraints.NotBlank;
 
-public record Question (String question) {
+import java.io.Serializable;
+
+public record Question (@NotBlank(message = "Question is required")String question)  implements Serializable {
 }

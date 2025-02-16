@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: azaddjan/pgvector
+    container_name: pgvector_db
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+    networks:
+      - net
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - net
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - "./prometheus-config.yml:/etc/prometheus/prometheus.yml"
+    networks:
+      - net
+    ports:
+      - "9090:9090"
+
+volumes:
+  pgvector_data:
+    driver: local
+  grafana-storage: {}
+
+networks:
+  net:
+    driver: bridge
